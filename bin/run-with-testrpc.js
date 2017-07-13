@@ -7,23 +7,30 @@ const ownName = basename(process.argv[1])
 
 if(process.argv.length < 3) {
     console.error(
-`${ownName}: run with '${ownName} [TestRPC options] cmd'
+`run with '${ownName} [--testrpc-cmd TESTRPC] [TestRPC options] cmd'
+
 Make sure that cmd is a standalone shell argument.
 For example, if trying to 'truffle migrate && truffle test'
-alongside a TestRPC instance with 2 addresses:
+alongside a TestRPC sc fork instance with 2 addresses:
 
-  ${ownName} -a 2 'truffle migrate && truffle test'`
+  ${ownName} --testrpc-cmd testrpc-sc -a 2 'truffle migrate && truffle test'
+`
     )
     process.exit(2)
 }
 
-const testrpcArgs = process.argv.slice(2, -1)
+let testrpcArgs = process.argv.slice(2, -1)
+let testrpcCmd = 'testrpc'
+if(testrpcArgs[0] === '--testrpc-cmd') {
+    testrpcCmd = testrpcArgs[1]
+    testrpcArgs = testrpcArgs.slice(2)
+}
 const cmd = process.argv[process.argv.length - 1]
 
-const testrpc = spawn('testrpc', testrpcArgs)
+const testrpc = spawn(testrpcCmd, testrpcArgs)
 new Promise((resolve, reject) => {
     testrpc.stdout.on('data', (data) => {
-        if(data.includes('Listening on localhost:8545')) {
+        if(data.includes('Listening')) {
             resolve()
         }
     });
