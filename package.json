@@ -1,0 +1,26 @@
+{
+  "name": "run-with-testrpc",
+  "version": "0.1.0",
+  "description": "Runs commands with TestRPC",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gnosis/run-with-testrpc.git"
+  },
+  "keywords": [
+    "ethereum",
+    "testrpc",
+    "utility"
+  ],
+  "author": "Alan Lu <alan.lu@gnosis.pm>",
+  "bin": {
+    "run-with-testrpc": "./bin/run-with-testrpc.js"
+  },
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/gnosis/run-with-testrpc/issues"
+  },
+  "homepage": "https://github.com/gnosis/run-with-testrpc#readme"
+}
