@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/gnosis/run-with-testrpc/issues"
   },
-  "homepage": "https://github.com/gnosis/run-with-testrpc#readme"
+  "homepage": "https://github.com/gnosis/run-with-testrpc#readme",
+  "dependencies": {
+    "ethereumjs-testrpc": "^4.1.1"
+  }
 }
