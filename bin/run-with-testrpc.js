@@ -21,7 +21,7 @@ alongside a TestRPC sc fork instance with 2 addresses:
 }
 
 let testrpcArgs = process.argv.slice(2, -1)
-let testrpcCmd = 'testrpc'
+let testrpcCmd = 'ganache-cli'
 if(testrpcArgs[0] === '--testrpc-cmd') {
     testrpcCmd = testrpcArgs[1]
     testrpcArgs = testrpcArgs.slice(2)
