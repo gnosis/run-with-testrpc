@@ -25,6 +25,6 @@
   "homepage": "https://github.com/gnosis/run-with-testrpc#readme",
   "dependencies": {
     "colors": "^1.1.2",
-    "ethereumjs-testrpc": "^4.1.1"
+    "ganache-cli": "^6.0.3"
   }
 }
