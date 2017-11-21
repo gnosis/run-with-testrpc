@@ -1,6 +1,6 @@
 {
   "name": "run-with-testrpc",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Runs commands with TestRPC",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -14,7 +14,7 @@
     "testrpc",
     "utility"
   ],
-  "author": "Alan Lu <alan.lu@gnosis.pm>",
+  "author": "Alan Lu <alan@gnosis.pm>",
   "bin": {
     "run-with-testrpc": "./bin/run-with-testrpc.js"
   },
