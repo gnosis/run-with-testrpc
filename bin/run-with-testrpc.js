@@ -2,6 +2,7 @@
 
 const { spawn, execSync } = require('child_process');
 const { basename } = require('path')
+require('colors')
 
 const ownName = basename(process.argv[1])
 
@@ -27,13 +28,27 @@ if(testrpcArgs[0] === '--testrpc-cmd') {
 }
 const cmd = process.argv[process.argv.length - 1]
 
-const testrpc = spawn(testrpcCmd, testrpcArgs)
+let testrpc
 new Promise((resolve, reject) => {
+    const handleError = (err) => {
+        if(err.code === 'ENOENT')
+            return reject(new Error(`Could not find ${testrpcCmd}`))
+        if(err.code === 'EACCES')
+            return reject(new Error(`Need permission to execute ${testrpcCmd}`))
+        return reject(err)
+    }
+
+    try {
+        testrpc = spawn(testrpcCmd, testrpcArgs)
+    } catch(err) {
+        return handleError(err)
+    }
+
     testrpc.stdout.on('data', (data) => {
         if(data.includes('Listening')) {
             resolve()
         }
-    });
+    })
 
     let error = ''
 
@@ -41,18 +56,18 @@ new Promise((resolve, reject) => {
         error += data
     })
 
-    testrpc.on('close', (code) => {
-        reject(new Error(`testrpc exited with code ${code} and the following error:\n\n${error}`));
-    });
+    testrpc.on('error', handleError)
 
+    testrpc.on('close', (code) =>
+        reject(new Error(`${testrpcCmd} exited early with code ${code}`))
+    )
 }).then(() => {
     execSync(cmd, { stdio: 'inherit' })
-    return Promise.resolve()
 }).then(() => {
     testrpc.kill()
     process.exit()
 }).catch((err) => {
-    testrpc.kill()
-    console.error(err)
+    if(testrpc) testrpc.kill()
+    console.error(`\n  ${err.message.red}\n`)
     process.exit(1)
 })
